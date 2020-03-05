@@ -29,10 +29,18 @@ void ai_propagate_wave(int **map, int x, int y)
     // Adiciona (x,y) em VISITAR
     // Enquanto VISITAR.size != 0:
     //      Retira (x,y) de VISITAR e o adiciona em VISITADOS
-    //      Se (x+1,y) não existe em VISITADOS, aumente um valor dele e adicione-o em VISITAR
-    //      Se (x-1,y) não existe em VISITADOS, aumente um valor dele e adicione-o em VISITAR
-    //      Se (x,y+1) não existe em VISITADOS, aumente um valor dele e adicione-o em VISITAR
-    //      Se (x,y-1) não existe em VISITADOS, aumente um valor dele e adicione-o em VISITAR
+    //      Se (x+1, y  ) não existe em VISITADOS, aumente um valor dele e adicione-o em VISITAR
+    //      Se (x-1, y  ) não existe em VISITADOS, aumente um valor dele e adicione-o em VISITAR
+    //      Se (x  , y+1) não existe em VISITADOS, aumente um valor dele e adicione-o em VISITAR
+    //      Se (x  , y-1) não existe em VISITADOS, aumente um valor dele e adicione-o em VISITAR
+
+    /*
+    SDL_Point p;
+    
+    list_add()
+    
+    */
+
 }
 
 // Retorna o valor do wave map, ou -1 se o local for inacessivel:

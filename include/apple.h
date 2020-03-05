@@ -3,7 +3,7 @@
 
 #include "SDL2/SDL.h"
 
-#define APPLE_COLOR 240, 40, 40, 255
+#define APPLE_COLOR 40, 40, 40, 255
 
 typedef struct
 {

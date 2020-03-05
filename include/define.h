@@ -1,7 +1,7 @@
 #ifndef DEFINE_H
 #define DEFINE_H
 
-#define BACKGROUND_COLOR 255, 255, 255, 0
+#define BACKGROUND_COLOR 20, 20, 20, 0
 
 #define SCREEN_WIDTH 500
 #define SCREEN_HEIGHT 500
