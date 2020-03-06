@@ -31,6 +31,7 @@ void update()
     wm_prepare_map(map);
     wm_propagate(map);
     wm_print_map(map);
+    wm_pick_path(map, &snake);
 }
 
 void render(SDL_Renderer *renderer)

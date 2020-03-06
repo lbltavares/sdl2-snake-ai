@@ -1,3 +1,4 @@
+#include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -46,6 +47,7 @@ void wm_propagate(int (*map)[MAP_HEIGHT])
     // Adiciona o primeiro no-descoberto (pos. da apple)
     SDL_Point *p = (SDL_Point *)SDL_malloc(sizeof(SDL_Point));
     SDL_memcpy(p, &apple.pos, sizeof(SDL_Point));
+    list_add(&nodes, p);
 
     while (nodes.size != 0)
     {
@@ -101,13 +103,23 @@ void wm_propagate(int (*map)[MAP_HEIGHT])
         }
 
         list_clear(&nodes, SDL_FALSE);
-        for(int i = 0; i < new_nodes.size; i++)
+        for (int i = 0; i < new_nodes.size; i++)
             list_add(&nodes, list_get(&new_nodes, i));
 
         list_destroy(&new_nodes, SDL_FALSE);
     }
 
     list_destroy(&nodes, SDL_TRUE);
+}
+
+void wm_pick_path(int (*map)[MAP_HEIGHT], Snake *snake)
+{
+    int x = snake->head->point.x;
+    int y = snake->head->point.y;
+
+    int menor = INT_MAX;
+
+
 }
 
 void wm_print_map(int (*map)[MAP_HEIGHT])
@@ -120,5 +132,5 @@ void wm_print_map(int (*map)[MAP_HEIGHT])
         }
         printf("\n");
     }
-    printf("\n\n");
+    printf("\n.\n");
 }

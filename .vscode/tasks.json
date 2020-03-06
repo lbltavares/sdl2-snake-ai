@@ -14,6 +14,7 @@
                 "${workspaceFolder}/bin/main.exe",
                 "-L'${workspaceFolder}/libs'",
                 "-I'${workspaceFolder}/include'",
+                "-g",
                 "-lmingw32",
                 "-lSDL2main",
                 "-lSDL2",

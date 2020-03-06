@@ -148,7 +148,7 @@ SDL_bool list_compare_points(void *a, void *b)
 {
     SDL_Point *p1 = (SDL_Point *)a;
     SDL_Point *p2 = (SDL_Point *)b;
-    return p1->x == p2->x && p1->y == p2->y;
+    return (p1->x == p2->x && p1->y == p2->y) ? SDL_TRUE : SDL_FALSE;
 }
 
 void list_print(List *list)
