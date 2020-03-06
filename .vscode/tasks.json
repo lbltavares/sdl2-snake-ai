@@ -11,8 +11,10 @@
             "args": [
                 "${workspaceFolder}/src/*.c",
                 "-o",
-                "${workspaceFolder}/bin/main",
+                "${workspaceFolder}/bin/main.exe",
+                "-L'${workspaceFolder}/libs'",
                 "-I'${workspaceFolder}/include'",
+                "-lmingw32",
                 "-lSDL2main",
                 "-lSDL2",
             ],

@@ -9,11 +9,11 @@ void list_init(List *list, size_t element_size)
     list->head = 0;
 }
 
-void free_nodes(Node *n, SDL_bool free_items)
+void list_free_nodes(Node *n, SDL_bool free_items)
 {
     if (n == 0)
         return;
-    free_nodes(n->next, free_items);
+    list_free_nodes(n->next, free_items);
     n->next = 0;
     if (free_items)
         SDL_free(n->element);
@@ -24,13 +24,20 @@ void list_destroy(List *list, SDL_bool free_items)
 {
     list->size = 0;
     list->element_size = 0;
-    free_nodes(list->head, free_items);
+    list_free_nodes(list->head, free_items);
     list->head = 0;
+}
+
+void list_clear(List *list, SDL_bool free_items)
+{
+    size_t el_size = list->element_size;
+    list_destroy(list, free_items);
+    list_init(list, el_size);
 }
 
 void list_add(List *list, void *element)
 {
-    Node *n = (Node *)SDL_malloc(sizeof(Node *));
+    Node *n = (Node *)SDL_malloc(sizeof(Node));
     n->next = 0;
     n->element = element;
     if (list->head == 0)
@@ -40,6 +47,24 @@ void list_add(List *list, void *element)
         Node *last = list->head;
         for (; last->next != 0; last = last->next)
             ;
+        last->next = n;
+    }
+    list->size++;
+}
+
+void list_add_unique(List *list, void *element, SDL_bool (*cmpr)(void *a, void *b))
+{
+    Node *n = (Node *)SDL_malloc(sizeof(Node));
+    n->next = 0;
+    n->element = element;
+    if (list->head == 0)
+        list->head = n;
+    else
+    {
+        Node *last = 0;
+        for (last = list->head; last->next != 0; last = last->next)
+            if ((*cmpr)(last->element, element))
+                return;
         last->next = n;
     }
     list->size++;
@@ -80,6 +105,31 @@ void *list_get(List *list, size_t i)
     return 0;
 }
 
+void list_purge(List *list, size_t i)
+{
+    if (list->size == 0 || i < 0 || i >= list->size)
+        return;
+    Node *tmp = list->head;
+    if (i == 0)
+        list->head = tmp->next;
+    else
+    {
+        for (size_t e = 0; tmp->next != 0; tmp = tmp->next, e++)
+        {
+            if (e == (i - 1))
+            {
+                Node *n = tmp->next;
+                tmp->next = tmp->next->next;
+                tmp = n;
+                break;
+            }
+        }
+    }
+    list->size--;
+    SDL_free(tmp->element);
+    SDL_free(tmp);
+}
+
 SDL_bool list_contains(List *list, void *element, SDL_bool (*cmpr)(void *a, void *b))
 {
     if (list->size == 0 || element == 0)
@@ -94,7 +144,7 @@ SDL_bool list_contains(List *list, void *element, SDL_bool (*cmpr)(void *a, void
 }
 
 // Callbacks for list_contains function:
-SDL_bool compare_points(void *a, void *b)
+SDL_bool list_compare_points(void *a, void *b)
 {
     SDL_Point *p1 = (SDL_Point *)a;
     SDL_Point *p2 = (SDL_Point *)b;
@@ -133,7 +183,7 @@ void list_print_elements(List *list, void (*prnt)(void *e))
     printf("size: %zu\n", list->size);
 }
 
-void print_point(void *e)
+void list_print_point(void *e)
 {
     SDL_Point *p = (SDL_Point *)e;
     printf("(%d, %d)\n", p->x, p->y);

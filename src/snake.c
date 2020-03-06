@@ -17,7 +17,7 @@ void snake_respawn()
 {
     snake_destroy();
     snake.must_grow = SDL_FALSE;
-    snake.head = (SnakePart *)SDL_malloc(sizeof(SnakePart *));
+    snake.head = (SnakePart *)SDL_malloc(sizeof(SnakePart));
     snake.head->point.x = rand() % MAP_WIDTH;
     snake.head->point.y = rand() % MAP_HEIGHT;
     snake.head->next = 0;
@@ -50,8 +50,6 @@ void snake_move(SnakePart *part, SDL_Point *dest)
     part->point.y = dest->y;
     return;
 }
-
-#include "ai.h"
 
 // Atualiza a snake a cada frame:
 void snake_update()
@@ -104,7 +102,7 @@ void snake_render(SDL_Renderer *renderer)
 // Adiciona uma parte a snake:
 void _snake_grow()
 {
-    SnakePart *p = (SnakePart *)SDL_malloc(sizeof(SnakePart *));
+    SnakePart *p = (SnakePart *)SDL_malloc(sizeof(SnakePart));
     p->next = snake.head;
     p->point.x = snake.head->point.x + snake.direction.x;
     p->point.y = snake.head->point.y + snake.direction.y;
