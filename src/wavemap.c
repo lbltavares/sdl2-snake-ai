@@ -118,27 +118,31 @@ void wm_pick_path(int (*map)[MAP_HEIGHT], Snake *snake)
     int y = snake->head->point.y;
     SDL_Point result = {-1, -1};
 
-    int menor = INT_MAX;
+    int menor = INT_MAX, teste;
+
+    teste = map[x - 1][y];
     if ((x - 1) >= 0 && map[x - 1][y] != -1 && map[x - 1][y] != 0 && map[x - 1][y] < menor)
     {
         menor = map[x - 1][y];
         result.x = x - 1;
         result.y = y;
     }
-    if ((x + 1) < MAP_WIDTH && map[x + 1][y] != -1 && map[x - 1][y] != 0 && map[x + 1][y] < menor)
+    teste = map[x + 1][y];
+    if ((x + 1) < MAP_WIDTH && map[x + 1][y] != -1 && map[x + 1][y] != 0 && map[x + 1][y] < menor)
     {
         menor = map[x + 1][y];
         result.x = x + 1;
         result.y = y;
     }
-    if ((y - 1) >= 0 && map[x][y - 1] != -1 && map[x - 1][y] != 0 && map[x][y - 1] < menor)
+    teste = map[x][y - 1];
+    if ((y - 1) >= 0 && map[x][y - 1] != -1 && map[x][y - 1] != 0 && map[x][y - 1] < menor)
     {
         menor = map[x][y - 1];
         result.x = x;
         result.y = y - 1;
     }
-
-    if ((y + 1) < MAP_HEIGHT && map[x][y + 1] != -1 && map[x - 1][y] != 0 && map[x][y + 1] < menor)
+    teste = map[x][y + 1];
+    if ((y + 1) < MAP_HEIGHT && map[x][y + 1] != -1 && map[x][y + 1] != 0 && map[x][y + 1] < menor)
     {
         menor = map[x][y + 1];
         result.x = x;

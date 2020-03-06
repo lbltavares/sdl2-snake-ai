@@ -20,18 +20,12 @@ void init()
     apple_init();
 }
 
-int map[MAP_WIDTH][MAP_HEIGHT];
 void update()
 {
     if (pause)
         return;
     snake_update();
     apple_update();
-
-    wm_prepare_map(map);
-    wm_propagate(map);
-    wm_print_map(map);
-    wm_pick_path(map, &snake);
 }
 
 void render(SDL_Renderer *renderer)
@@ -39,29 +33,19 @@ void render(SDL_Renderer *renderer)
     SDL_SetRenderDrawColor(renderer, BACKGROUND_COLOR);
     SDL_RenderClear(renderer);
 
-    // Sombreamento
-    if (SOMBRAS)
-    {
-        for (int y = 0; y < MAP_HEIGHT; y++)
-        {
-            for (int x = 0; x < MAP_WIDTH; x++)
-            {
-                Uint8 col = MAP_WIDTH * 2 - map[x][y];
-                SDL_SetRenderDrawColor(renderer, col, col, col, 255);
-                SDL_Rect r;
-                r.w = MAP_TILE_WIDTH;
-                r.h = MAP_TILE_HEIGHT;
-                r.x = r.w * x;
-                r.y = r.h * y;
-                SDL_RenderFillRect(renderer, &r);
-            }
-        }
-    }
-
     apple_render(renderer);
     snake_render(renderer);
 
     SDL_RenderPresent(renderer);
+}
+
+void ai_play()
+{
+    int map[MAP_WIDTH][MAP_HEIGHT];
+    wm_prepare_map(map);
+    wm_propagate(map);
+    wm_print_map(map);
+    wm_pick_path(map, &snake);
 }
 
 void destroy()
@@ -105,6 +89,8 @@ int main(int argv, char *args[])
         parse_events(&event);
         update();
         render(renderer);
+
+        ai_play();
     }
 
     SDL_DestroyRenderer(renderer);

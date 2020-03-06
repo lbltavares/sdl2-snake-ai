@@ -12,7 +12,7 @@
 
 #define SOMBRAS 0
 #define BACKGROUND_COLOR 30, 30, 30, 255
-#define SNAKE_COLOR 32, 32, 32, 255
+#define SNAKE_COLOR 34, 34, 34, 255
 #define APPLE_COLOR SNAKE_COLOR
 
 #define FPS 60
