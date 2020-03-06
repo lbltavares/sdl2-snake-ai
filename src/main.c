@@ -61,11 +61,8 @@ void parse_events(SDL_Event *event)
     }
 }
 
-#include "list.h"
-
 int main(int argv, char *args[])
 {
-
     srand(time(NULL));
     SDL_Init(SDL_INIT_VIDEO);
     SDL_Window *window;
