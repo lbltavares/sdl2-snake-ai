@@ -49,7 +49,62 @@ void wm_propagate(int (*map)[MAP_HEIGHT])
 
     while (nodes.size != 0)
     {
-        
+        List new_nodes;
+        list_init(&new_nodes, sizeof(SDL_Point));
+
+        for (int i = 0; i < nodes.size; i++)
+        {
+            SDL_Point *el = (SDL_Point *)list_get(&nodes, i);
+            int x = el->x;
+            int y = el->y;
+            int d = map[x][y];
+
+            // Check East
+            if ((x + 1) < MAP_WIDTH && map[x + 1][y] == 0)
+            {
+                SDL_Point *p = (SDL_Point *)SDL_malloc(sizeof(SDL_Point));
+                p->x = x + 1;
+                p->y = y;
+                list_add_unique(&new_nodes, p, list_compare_points);
+                map[p->x][p->y] = d + 1;
+            }
+
+            // Check West
+            if ((x - 1) >= 0 && map[x - 1][y] == 0)
+            {
+                SDL_Point *p = (SDL_Point *)SDL_malloc(sizeof(SDL_Point));
+                p->x = x - 1;
+                p->y = y;
+                list_add_unique(&new_nodes, p, list_compare_points);
+                map[p->x][p->y] = d + 1;
+            }
+
+            // Check South
+            if ((y + 1) < MAP_HEIGHT && map[x][y + 1] == 0)
+            {
+                SDL_Point *p = (SDL_Point *)SDL_malloc(sizeof(SDL_Point));
+                p->x = x;
+                p->y = y + 1;
+                list_add_unique(&new_nodes, p, list_compare_points);
+                map[p->x][p->y] = d + 1;
+            }
+
+            // Check North
+            if ((y - 1) >= 0 && map[x][y - 1] == 0)
+            {
+                SDL_Point *p = (SDL_Point *)SDL_malloc(sizeof(SDL_Point));
+                p->x = x;
+                p->y = y - 1;
+                list_add_unique(&new_nodes, p, list_compare_points);
+                map[p->x][p->y] = d + 1;
+            }
+        }
+
+        list_clear(&nodes, SDL_FALSE);
+        for(int i = 0; i < new_nodes.size; i++)
+            list_add(&nodes, list_get(&new_nodes, i));
+
+        list_destroy(&new_nodes, SDL_FALSE);
     }
 
     list_destroy(&nodes, SDL_TRUE);
