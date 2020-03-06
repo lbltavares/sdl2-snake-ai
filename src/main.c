@@ -3,6 +3,7 @@
 #include <time.h>
 #include <math.h>
 
+#include "wavemap.h"
 #include "define.h"
 #include "main.h"
 #include "snake.h"
@@ -19,7 +20,7 @@ void init()
     apple_init();
 }
 
-#include "wavemap.h"
+int map[MAP_WIDTH][MAP_HEIGHT];
 void update()
 {
     if (pause)
@@ -27,7 +28,6 @@ void update()
     snake_update();
     apple_update();
 
-    int map[MAP_WIDTH][MAP_HEIGHT];
     wm_prepare_map(map);
     wm_propagate(map);
     wm_print_map(map);
@@ -38,6 +38,21 @@ void render(SDL_Renderer *renderer)
 {
     SDL_SetRenderDrawColor(renderer, BACKGROUND_COLOR);
     SDL_RenderClear(renderer);
+
+    for (int y = 0; y < MAP_HEIGHT; y++)
+    {
+        for (int x = 0; x < MAP_WIDTH; x++)
+        {
+            Uint8 col = 50 - map[x][y];
+            SDL_SetRenderDrawColor(renderer, col, col, col, 255);
+            SDL_Rect r;
+            r.w = MAP_TILE_WIDTH;
+            r.h = MAP_TILE_HEIGHT;
+            r.x = r.w * x;
+            r.y = r.h * y;
+            SDL_RenderFillRect(renderer, &r);
+        }
+    }
 
     apple_render(renderer);
     snake_render(renderer);

@@ -79,6 +79,8 @@ void snake_update()
         snake_respawn();
         return;
     }
+
+    
 }
 
 // Renderiza a snake:
