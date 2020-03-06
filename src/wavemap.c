@@ -40,21 +40,19 @@ static void wm_add_point_to_set(int x, int y, int (*map)[MAP_HEIGHT], List *list
 // Propaga a wave atraves do mapa:
 void wm_propagate(int (*map)[MAP_HEIGHT])
 {
-    List A, B;
-    list_init(&A, sizeof(SDL_Point));
-    list_init(&B, sizeof(SDL_Point));
-    SDL_Point *src = (SDL_Point *)SDL_malloc(sizeof(SDL_Point));
-    SDL_memcpy(src, &apple.pos, sizeof(SDL_Point));
-    list_add(&A, src);
+    List nodes;
+    list_init(&nodes, sizeof(SDL_Point));
 
-    /*
-     * FAZER O ALGORITMO DE PROPAGAÇÃO AQUI
-     */
-    list_print_elements(&A, list_print_point);
+    // Adiciona o primeiro no-descoberto (pos. da apple)
+    SDL_Point *p = (SDL_Point *)SDL_malloc(sizeof(SDL_Point));
+    SDL_memcpy(p, &apple.pos, sizeof(SDL_Point));
 
-    SDL_free(src);
-    list_destroy(&A, SDL_TRUE);
-    list_destroy(&B, SDL_TRUE);
+    while (nodes.size != 0)
+    {
+        
+    }
+
+    list_destroy(&nodes, SDL_TRUE);
 }
 
 void wm_print_map(int (*map)[MAP_HEIGHT])
