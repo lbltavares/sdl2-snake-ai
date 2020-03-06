@@ -31,8 +31,6 @@ void update()
     wm_prepare_map(map);
     wm_propagate(map);
     wm_print_map(map);
-
-    exit(0);
 }
 
 void render(SDL_Renderer *renderer)
