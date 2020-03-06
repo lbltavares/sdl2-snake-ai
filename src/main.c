@@ -6,6 +6,7 @@
 #include "define.h"
 #include "main.h"
 #include "snake.h"
+#include "ai.h"
 #include "apple.h"
 
 int pause = SDL_FALSE;
@@ -25,6 +26,15 @@ void update()
         return;
     snake_update();
     apple_update();
+
+    SDL_Point *ap = (SDL_Point *)SDL_malloc(sizeof(SDL_Point *));
+    ap->x = apple.pos.x;
+    ap->y = apple.pos.y;
+    int wave_map[MAP_WIDTH][MAP_HEIGHT];
+    ai_create_map(wave_map);
+    ai_propagate_wave(wave_map, ap);
+    
+
 }
 
 void render(SDL_Renderer *renderer)

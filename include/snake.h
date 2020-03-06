@@ -3,9 +3,6 @@
 
 #include "SDL2/SDL.h"
 
-#define SNAKE_COLOR 40, 40, 40, 255
-#define SNAKE_INITIAL_DELAY 200
-
 typedef struct _SnakePart
 {
     SDL_Point point;

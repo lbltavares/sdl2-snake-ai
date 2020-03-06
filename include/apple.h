@@ -3,8 +3,6 @@
 
 #include "SDL2/SDL.h"
 
-#define APPLE_COLOR 40, 40, 40, 255
-
 typedef struct
 {
     SDL_Point pos;
