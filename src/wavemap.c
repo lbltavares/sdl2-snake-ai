@@ -116,10 +116,40 @@ void wm_pick_path(int (*map)[MAP_HEIGHT], Snake *snake)
 {
     int x = snake->head->point.x;
     int y = snake->head->point.y;
+    SDL_Point result = {-1, -1};
 
     int menor = INT_MAX;
+    if ((x - 1) >= 0 && map[x - 1][y] != -1 && map[x - 1][y] < menor)
+    {
+        menor = map[x - 1][y];
+        result.x = x - 1;
+        result.y = y;
+    }
+    if ((x + 1) < MAP_WIDTH && map[x + 1][y] != -1 && map[x + 1][y] < menor)
+    {
+        menor = map[x + 1][y];
+        result.x = x + 1;
+        result.y = y;
+    }
+    if ((y - 1) >= 0 && map[x][y - 1] != -1 && map[x][y - 1] < menor)
+    {
+        menor = map[x][y - 1];
+        result.x = x;
+        result.y = y - 1;
+    }
 
+    if ((y + 1) < MAP_HEIGHT && map[x][y + 1] != -1 && map[x][y + 1] < menor)
+    {
+        menor = map[x][y + 1];
+        result.x = x;
+        result.y = y + 1;
+    }
 
+    if (result.x != -1 && result.y != -1)
+    {
+        SDL_Point dir = {result.x - snake->head->point.x, result.y - snake->head->point.y};
+        snake_set_direction(dir.x, dir.y);
+    }
 }
 
 void wm_print_map(int (*map)[MAP_HEIGHT])
