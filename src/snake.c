@@ -161,7 +161,7 @@ void snake_process_event(SDL_Event *event)
         }
         else if (key == SDLK_LSHIFT)
         {
-            snake.delay = 50;
+            snake.delay = 0;
         }
     }
     else if (event->type == SDL_KEYUP)

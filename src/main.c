@@ -44,7 +44,7 @@ void ai_play()
     int map[MAP_WIDTH][MAP_HEIGHT];
     wm_prepare_map(map);
     wm_propagate(map);
-    wm_print_map(map);
+    //wm_print_map(map);
     wm_pick_path(map, &snake);
 }
 
