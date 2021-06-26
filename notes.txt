@@ -1,3 +1,0 @@
-update order:
-    snake
-    ball
